@@ -15,11 +15,13 @@ const MENU_CONFIG = {
   TEACHER: [
     { name: 'Dashboard', path: '/dashboard/teacher', icon: BarChart },
     { name: 'Manajemen Kelas', path: '/dashboard/teacher/classes', icon: Users },
-    { name: 'Penilaian', path: '/dashboard/teacher/grades', icon: CheckSquare },
+    { name: 'Modul & Kuis', path: '/dashboard/teacher/modules', icon: BookOpen },
+    { name: 'Buku Nilai', path: '/dashboard/teacher/grades', icon: CheckSquare },
   ],
   STUDENT: [
     { name: 'Dashboard', path: '/dashboard/student', icon: BarChart },
     { name: 'Ruang Kelas', path: '/dashboard/student/class', icon: Users },
+    { name: 'Modul & Kuis', path: '/dashboard/student/modules', icon: BookOpen },
     { name: 'Tugas Saya', path: '/dashboard/student/assignments', icon: BookOpen },
     { name: 'Kanban Board', path: '/dashboard/student/kanban', icon: CheckSquare },
   ],
