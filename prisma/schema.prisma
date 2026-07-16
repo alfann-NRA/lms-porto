@@ -22,6 +22,7 @@ model User {
   submissions   Submission[]
   comments      Comment[]
   attendances   AttendanceRecord[]
+  quizAttempts  QuizAttempt[]
 }
 
 model Class {
@@ -39,6 +40,7 @@ model Class {
   virtualClasses VirtualClass[]
   discussions Discussion[]
   quizzes     Quiz[]
+  modules     Module[]
 }
 
 model Assignment {
@@ -127,5 +129,39 @@ model Quiz {
   class       Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
   title       String
   durationMin Int      @default(60)
+  questions   Question[]
+  attempts    QuizAttempt[]
+  createdAt   DateTime @default(now())
+}
+
+model Question {
+  id          String   @id @default(cuid())
+  quizId      String
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  text        String
+  optionA     String
+  optionB     String
+  optionC     String
+  optionD     String
+  correctOpt  String   // 'A', 'B', 'C', or 'D'
+}
+
+model QuizAttempt {
+  id          String   @id @default(cuid())
+  quizId      String
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  studentId   String
+  student     User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  score       Int      @default(0)
+  finishedAt  DateTime @default(now())
+}
+
+model Module {
+  id          String   @id @default(cuid())
+  classId     String
+  class       Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  title       String
+  content     String   // text or markdown content
+  fileUrl     String?  // optional PDF/Video link
   createdAt   DateTime @default(now())
 }
