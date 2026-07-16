@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen, Star, Users } from 'lucide-react';
 
@@ -9,10 +10,8 @@ export default function Home() {
       {/* Navbar */}
       <header className="w-full px-6 py-4 flex items-center justify-between border-b-2 border-border bg-card/50 backdrop-blur-md sticky top-0 z-50">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-primary-foreground font-bold shadow-md">
-            L
-          </div>
-          <span className="text-2xl font-bold font-heading text-foreground">LMS Pro</span>
+          <Image src="/logo.png" alt="Belajarkuu Logo" width={40} height={40} className="object-contain" />
+          <span className="text-2xl font-bold font-heading text-foreground">Belajarkuu</span>
         </div>
         <div className="flex items-center gap-4">
           <Link href="/login" className="text-foreground font-bold hover:text-primary transition-colors px-4 py-2">

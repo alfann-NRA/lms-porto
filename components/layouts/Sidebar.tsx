@@ -1,6 +1,7 @@
 'use client';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { BookOpen, CheckSquare, BarChart, Users, Settings } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
@@ -33,10 +34,8 @@ export default function Sidebar({ role }: { role: 'TEACHER' | 'STUDENT' | 'PAREN
   return (
     <aside className="w-64 min-h-screen bg-sidebar border-r border-sidebar-border flex flex-col transition-colors duration-300">
       <div className="h-20 flex items-center px-6 border-b border-sidebar-border">
-        <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-primary-foreground font-bold mr-3 shadow-md">
-          L
-        </div>
-        <span className="text-2xl font-bold font-heading text-sidebar-foreground">LMS Pro</span>
+        <Image src="/logo.png" alt="Belajarkuu Logo" width={40} height={40} className="object-contain mr-3" />
+        <span className="text-2xl font-bold font-heading text-sidebar-foreground">Belajarkuu</span>
       </div>
 
       <nav className="flex-1 px-4 py-6 space-y-2">

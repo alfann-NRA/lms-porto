@@ -16,7 +16,7 @@ const comicNeue = Comic_Neue({
 import Providers from "@/components/providers";
 
 export const metadata: Metadata = {
-  title: "LMS Pro",
+  title: "Belajarkuu",
   description: "Vibrant & modern learning management system",
 };
 
