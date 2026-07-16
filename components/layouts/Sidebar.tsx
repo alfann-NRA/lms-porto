@@ -19,6 +19,7 @@ const MENU_CONFIG = {
   ],
   STUDENT: [
     { name: 'Dashboard', path: '/dashboard/student', icon: BarChart },
+    { name: 'Ruang Kelas', path: '/dashboard/student/class', icon: Users },
     { name: 'Tugas Saya', path: '/dashboard/student/assignments', icon: BookOpen },
     { name: 'Kanban Board', path: '/dashboard/student/kanban', icon: CheckSquare },
   ],
