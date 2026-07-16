@@ -31,7 +31,6 @@ export default function Sidebar({ role }: { role: 'TEACHER' | 'STUDENT' | 'PAREN
   const menus = MENU_CONFIG[role] || [];
 
   return (
-  return (
     <aside className="w-64 min-h-screen bg-sidebar border-r border-sidebar-border flex flex-col transition-colors duration-300">
       <div className="h-20 flex items-center px-6 border-b border-sidebar-border">
         <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-primary-foreground font-bold mr-3 shadow-md">
