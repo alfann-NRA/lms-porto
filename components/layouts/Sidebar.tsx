@@ -37,7 +37,7 @@ export default function Sidebar({ role }: { role: 'TEACHER' | 'STUDENT' | 'PAREN
   return (
     <aside className="w-64 min-h-screen bg-sidebar border-r border-sidebar-border flex flex-col transition-colors duration-300">
       <div className="h-20 flex items-center px-6 border-b border-sidebar-border">
-        <Image src="/logo.png" alt="Belajarkuu Logo" width={40} height={40} className="object-contain mr-3" />
+        <Image src="/logo.svg" alt="Belajarkuu Logo" width={40} height={40} className="object-contain mr-3" />
         <span className="text-2xl font-bold font-heading text-sidebar-foreground">Belajarkuu</span>
       </div>
 

@@ -10,7 +10,7 @@ export default function Home() {
       {/* Navbar */}
       <header className="w-full px-6 py-4 flex items-center justify-between border-b-2 border-border bg-card/50 backdrop-blur-md sticky top-0 z-50">
         <div className="flex items-center gap-2">
-          <Image src="/logo.png" alt="Belajarkuu Logo" width={40} height={40} className="object-contain" />
+          <Image src="/logo.svg" alt="Belajarkuu Logo" width={40} height={40} className="object-contain" />
           <span className="text-2xl font-bold font-heading text-foreground">Belajarkuu</span>
         </div>
         <div className="flex items-center gap-4">
