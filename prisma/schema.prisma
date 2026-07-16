@@ -1,6 +1,6 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 generator client {
@@ -12,7 +12,7 @@ model User {
   name      String
   email     String   @unique
   password  String
-  role      Role     @default(STUDENT)
+  role      String   @default("STUDENT") // STUDENT, TEACHER, PARENT
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
@@ -22,11 +22,7 @@ model User {
   submissions   Submission[]
 }
 
-enum Role {
-  STUDENT
-  TEACHER
-  PARENT
-}
+
 
 model Class {
   id          String       @id @default(cuid())

@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { FileText, CheckCircle, Clock } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
@@ -11,8 +11,10 @@ function cn(...inputs: ClassValue[]) {
 
 type Task = {
   id: string;
+  assignmentId: string;
   content: string;
   course: string;
+  status: string;
 };
 
 type Columns = {
@@ -25,35 +27,75 @@ type Columns = {
 };
 
 const initialColumns: Columns = {
-  todo: {
+  TODO: {
     name: 'Tugas Baru',
     icon: FileText,
     colorClass: 'text-accent border-accent',
-    items: [
-      { id: 't1', content: 'Baca Bab 1-3 Sejarah', course: 'Sejarah' },
-      { id: 't2', content: 'Latihan Soal Matematika Halaman 42', course: 'Matematika' },
-    ],
+    items: [],
   },
-  inProgress: {
+  IN_PROGRESS: {
     name: 'Sedang Dikerjakan',
     icon: Clock,
     colorClass: 'text-primary border-primary',
-    items: [
-      { id: 't3', content: 'Esai Bahasa Indonesia', course: 'Bahasa Indonesia' },
-    ],
+    items: [],
   },
-  done: {
+  DONE: {
     name: 'Selesai',
     icon: CheckCircle,
     colorClass: 'text-green-500 border-green-500',
-    items: [
-      { id: 't4', content: 'Kuis Biologi', course: 'Biologi' },
-    ],
+    items: [],
   },
 };
 
 export default function KanbanBoard() {
   const [columns, setColumns] = useState(initialColumns);
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = async () => {
+    try {
+      const res = await fetch('/api/submissions');
+      if (res.ok) {
+        const data: Task[] = await res.json();
+        const newCols = { ...initialColumns };
+        // Reset items
+        Object.keys(newCols).forEach(key => newCols[key].items = []);
+        
+        data.forEach(task => {
+          const colId = task.status === 'PENDING' ? 'TODO' : task.status === 'GRADED' ? 'DONE' : task.status;
+          if (newCols[colId]) {
+            newCols[colId].items.push(task);
+          } else {
+             newCols['TODO'].items.push(task);
+          }
+        });
+        setColumns({ ...newCols });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const updateTaskStatus = async (taskId: string, assignmentId: string, newStatus: string) => {
+    try {
+      const res = await fetch('/api/submissions', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ taskId, assignmentId, status: newStatus })
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        // If it was a new submission, we should re-fetch to get the real DB id
+        if (taskId.startsWith('new-')) {
+          fetchTasks();
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
@@ -65,6 +107,7 @@ export default function KanbanBoard() {
       const sourceItems = [...sourceColumn.items];
       const destItems = [...destColumn.items];
       const [removed] = sourceItems.splice(source.index, 1);
+      removed.status = destination.droppableId;
       destItems.splice(destination.index, 0, removed);
       
       setColumns({
@@ -78,6 +121,9 @@ export default function KanbanBoard() {
           items: destItems
         }
       });
+      
+      // Update to DB
+      updateTaskStatus(removed.id, removed.assignmentId, destination.droppableId);
     } else {
       const column = columns[source.droppableId];
       const copiedItems = [...column.items];
