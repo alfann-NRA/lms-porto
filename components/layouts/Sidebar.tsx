@@ -19,10 +19,14 @@ const MENU_CONFIG = {
   STUDENT: [
     { name: 'Dashboard', path: '/dashboard/student', icon: BarChart },
     { name: 'Tugas Saya', path: '/dashboard/student/assignments', icon: BookOpen },
+    { name: 'Kanban Board', path: '/dashboard/student/kanban', icon: CheckSquare },
+  ],
+  PARENT: [
+    { name: 'Pantau Anak', path: '/dashboard/parent', icon: Users },
   ],
 };
 
-export default function Sidebar({ role }: { role: 'TEACHER' | 'STUDENT' }) {
+export default function Sidebar({ role }: { role: 'TEACHER' | 'STUDENT' | 'PARENT' }) {
   const pathname = usePathname();
   const menus = MENU_CONFIG[role] || [];
 
