@@ -20,9 +20,9 @@ model User {
   classesTaught Class[]      @relation("TeacherClasses")
   classes       Class[]      @relation("StudentClasses")
   submissions   Submission[]
+  comments      Comment[]
+  attendances   AttendanceRecord[]
 }
-
-
 
 model Class {
   id          String       @id @default(cuid())
@@ -35,6 +35,10 @@ model Class {
   teacher     User         @relation("TeacherClasses", fields: [teacherId], references: [id])
   students    User[]       @relation("StudentClasses")
   assignments Assignment[]
+  attendances Attendance[]
+  virtualClasses VirtualClass[]
+  discussions Discussion[]
+  quizzes     Quiz[]
 }
 
 model Assignment {
@@ -63,4 +67,65 @@ model Submission {
 
   student      User       @relation(fields: [studentId], references: [id])
   assignment   Assignment @relation(fields: [assignmentId], references: [id])
+}
+
+// === NEW EDLINK FEATURES ===
+
+model Attendance {
+  id          String   @id @default(cuid())
+  classId     String
+  class       Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  date        DateTime @default(now())
+  isOpen      Boolean  @default(true)
+  records     AttendanceRecord[]
+}
+
+model AttendanceRecord {
+  id           String     @id @default(cuid())
+  attendanceId String
+  attendance   Attendance @relation(fields: [attendanceId], references: [id], onDelete: Cascade)
+  studentId    String
+  student      User       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  status       String     @default("PRESENT") // PRESENT, LATE, EXCUSED
+  time         DateTime   @default(now())
+}
+
+model VirtualClass {
+  id          String   @id @default(cuid())
+  classId     String
+  class       Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  title       String
+  platform    String   @default("ZOOM") // ZOOM, GMEET
+  meetingLink String
+  startTime   DateTime
+  createdAt   DateTime @default(now())
+}
+
+model Discussion {
+  id          String   @id @default(cuid())
+  classId     String
+  class       Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  title       String
+  content     String
+  comments    Comment[]
+  createdAt   DateTime @default(now())
+}
+
+model Comment {
+  id           String     @id @default(cuid())
+  discussionId String
+  discussion   Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content      String
+  createdAt    DateTime   @default(now())
+}
+
+model Quiz {
+  id          String   @id @default(cuid())
+  classId     String
+  class       Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  title       String
+  durationMin Int      @default(60)
+  createdAt   DateTime @default(now())
 }
