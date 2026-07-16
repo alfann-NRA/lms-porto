@@ -1,0 +1,70 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  classesTaught Class[]      @relation("TeacherClasses")
+  classes       Class[]      @relation("StudentClasses")
+  submissions   Submission[]
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+  PARENT
+}
+
+model Class {
+  id          String       @id @default(cuid())
+  name        String
+  description String?
+  teacherId   String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  teacher     User         @relation("TeacherClasses", fields: [teacherId], references: [id])
+  students    User[]       @relation("StudentClasses")
+  assignments Assignment[]
+}
+
+model Assignment {
+  id          String       @id @default(cuid())
+  title       String
+  description String
+  dueDate     DateTime
+  classId     String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  class       Class        @relation(fields: [classId], references: [id])
+  submissions Submission[]
+}
+
+model Submission {
+  id           String   @id @default(cuid())
+  content      String?
+  fileUrl      String?
+  grade        Float?
+  status       String   @default("PENDING") // PENDING, GRADED, LATE
+  studentId    String
+  assignmentId String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  student      User       @relation(fields: [studentId], references: [id])
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+}
