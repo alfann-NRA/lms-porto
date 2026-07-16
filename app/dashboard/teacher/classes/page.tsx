@@ -40,7 +40,7 @@ export default function ClassManagementPage() {
             </div>
             <h3 className="text-2xl font-bold font-heading mb-2">Buka Sesi Presensi Baru</h3>
             <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-              Mahasiswa akan mendapatkan notifikasi dan dapat melakukan "Tap Hadir" melalui aplikasi mereka.
+              Siswa akan mendapatkan notifikasi dan dapat melakukan "Tap Hadir" melalui aplikasi mereka.
             </p>
             <button 
               onClick={handleOpenAttendance}
@@ -88,7 +88,7 @@ export default function ClassManagementPage() {
               <MessageSquare className="w-10 h-10 text-green-500" />
             </div>
             <h3 className="text-2xl font-bold font-heading mb-2">Forum Diskusi Kelas</h3>
-            <p className="text-muted-foreground mb-8">Buat topik diskusi baru untuk memancing keaktifan mahasiswa di luar jam kelas.</p>
+            <p className="text-muted-foreground mb-8">Buat topik diskusi baru untuk memancing keaktifan siswa di luar jam kelas.</p>
             <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-md active:translate-y-1">
               Buat Topik Baru
             </button>

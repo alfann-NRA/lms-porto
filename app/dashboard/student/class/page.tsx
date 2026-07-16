@@ -47,7 +47,7 @@ export default function StudentClassPage() {
                 </div>
                 <h3 className="text-2xl font-bold font-heading mb-2">Presensi Dibuka</h3>
                 <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-                  Dosen Anda telah membuka sesi presensi. Silakan ketuk tombol di bawah untuk mencatatkan kehadiran Anda.
+                  Guru Anda telah membuka sesi presensi. Silakan ketuk tombol di bawah untuk mencatatkan kehadiran Anda.
                 </p>
                 <button 
                   onClick={handleAttend}
@@ -59,7 +59,7 @@ export default function StudentClassPage() {
                 </button>
               </>
             ) : (
-              <p className="text-muted-foreground py-10">Belum ada sesi presensi yang dibuka oleh dosen.</p>
+              <p className="text-muted-foreground py-10">Belum ada sesi presensi yang dibuka oleh guru.</p>
             )}
           </div>
         );
