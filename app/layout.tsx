@@ -14,6 +14,7 @@ const comicNeue = Comic_Neue({
 });
 
 import Providers from "@/components/providers";
+import { SuperAdminTrigger } from "@/components/SuperAdminTrigger";
 
 export const metadata: Metadata = {
   title: "Belajarkuu",
@@ -31,6 +32,7 @@ export default function RootLayout({
       className={`${baloo.variable} ${comicNeue.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <SuperAdminTrigger />
         <Providers>
           {children}
         </Providers>
